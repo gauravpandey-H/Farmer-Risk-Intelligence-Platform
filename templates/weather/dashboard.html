@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Weather Analysis - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-md-12">
+        <h2 class="text-success"><i class="fa-solid fa-cloud-sun-rain me-2"></i>Weather Analysis</h2>
+        <p class="text-muted">Current weather and 7-day forecast for {{ current_weather.location }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Current Weather -->
+    <div class="col-md-4 mb-4" data-aos="fade-right">
+        <div class="glass-card p-4 text-center h-100 bg-gradient-primary">
+            <h3 class="mb-4">Right Now</h3>
+            <div class="display-1 fw-bold mb-3">{{ current_weather.temperature }}°C</div>
+            <h4>{{ current_weather.condition }}</h4>
+            <hr class="border-white opacity-50">
+            <div class="d-flex justify-content-between mt-4">
+                <div>
+                    <i class="fa-solid fa-droplet mb-2"></i>
+                    <p class="mb-0">{{ current_weather.humidity }}%</p>
+                    <small>Humidity</small>
+                </div>
+                <div>
+                    <i class="fa-solid fa-wind mb-2"></i>
+                    <p class="mb-0">{{ current_weather.wind_speed }} km/h</p>
+                    <small>Wind</small>
+                </div>
+                <div>
+                    <i class="fa-solid fa-cloud-showers-heavy mb-2"></i>
+                    <p class="mb-0">{{ current_weather.rainfall }} mm</p>
+                    <small>Rainfall</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7 Day Forecast -->
+    <div class="col-md-8 mb-4" data-aos="fade-left">
+        <div class="glass-card p-4 h-100">
+            <h4 class="mb-4">7-Day Forecast</h4>
+            <div class="row text-center">
+                {% for day in forecast %}
+                <div class="col px-1">
+                    <div class="p-2 border rounded">
+                        <strong>{{ day.day }}</strong><br>
+                        {% if day.condition == 'Sunny' %}<i class="fa-solid fa-sun text-warning my-2 fs-4"></i>
+                        {% elif day.condition == 'Cloudy' %}<i class="fa-solid fa-cloud text-secondary my-2 fs-4"></i>
+                        {% else %}<i class="fa-solid fa-cloud-rain text-primary my-2 fs-4"></i>{% endif %}
+                        <br>
+                        <span class="text-danger fw-bold">{{ day.high }}°</span> / <span class="text-primary">{{ day.low }}°</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

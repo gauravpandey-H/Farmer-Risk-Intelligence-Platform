@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-md-12">
+        <h2 class="text-success"><i class="fa-solid fa-gauge-high me-2"></i>Platform Dashboard</h2>
+        <p class="text-muted">Welcome to the complete Farmer Risk Intelligence Platform.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+            <div class="widget-value">{{ total_crops }}</div>
+            <div class="text-muted">Total Crops</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-leaf text-success"></i></div>
+            <div class="widget-value">{{ healthy_crops }}</div>
+            <div class="text-muted">Healthy Crops</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-bug text-danger"></i></div>
+            <div class="widget-value">{{ diseased_crops }}</div>
+            <div class="text-muted">Diseased Crops</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <div class="widget-value">{{ total_profit }}</div>
+            <div class="text-muted">Predicted Profit</div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-4" data-aos="zoom-in">
+        <div class="glass-card p-4 text-center h-100">
+            <h4><i class="fa-solid fa-cloud-sun-rain me-2"></i>Weather Analysis</h4>
+            <p class="text-muted">Check current weather conditions and 7-day forecasts for your region.</p>
+            <a href="{% url 'weather_dashboard' %}" class="btn btn-outline-success mt-3">View Weather</a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="glass-card p-4 text-center h-100">
+            <h4><i class="fa-solid fa-microscope me-2"></i>Disease Predictor</h4>
+            <p class="text-muted">Upload crop leaf images for AI-based disease detection and solutions.</p>
+            <a href="{% url 'predict_disease' %}" class="btn btn-outline-success mt-3">Predict Disease</a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="glass-card p-4 text-center h-100">
+            <h4><i class="fa-solid fa-chart-line me-2"></i>Market Analysis</h4>
+            <p class="text-muted">Analyze market trends and predict future crop prices.</p>
+            <a href="{% url 'market_dashboard' %}" class="btn btn-outline-success mt-3">View Markets</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

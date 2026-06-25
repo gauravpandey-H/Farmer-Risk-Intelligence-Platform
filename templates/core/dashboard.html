@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Dashboard - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-success"><i class="fa-solid fa-chart-pie me-2"></i>Dashboard</h2>
+            <div>
+                <a href="{% url 'add_crop' %}" class="btn btn-primary-custom me-2"><i class="fa-solid fa-plus me-1"></i> Add Crop</a>
+                <a href="{% url 'predict_disease' %}" class="btn btn-outline-success"><i class="fa-solid fa-camera me-1"></i> Predict Disease</a>
+            </div>
+        </div>
+        <p class="text-muted">Welcome back, {{ user.first_name|default:user.username }}!</p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Stat Cards -->
+    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+            <div class="widget-value">{{ crops|length }}</div>
+            <div class="text-muted">Total Crops</div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+            <div class="widget-value">24°C</div>
+            <div class="text-muted">Current Weather (Mock)</div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="glass-card p-4 text-center">
+            <div class="widget-icon"><i class="fa-solid fa-seedling"></i></div>
+            <div class="widget-value">{{ user.farmer.land_size }}</div>
+            <div class="text-muted">Acres of Land</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Crop List -->
+    <div class="col-md-6 mb-4" data-aos="fade-right">
+        <div class="glass-card p-4 h-100">
+            <h4 class="mb-4">My Crops</h4>
+            {% if crops %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Area (Acres)</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for crop in crops %}
+                            <tr>
+                                <td>{{ crop.crop_name }}</td>
+                                <td>{{ crop.land_area }}</td>
+                                <td>
+                                    {% if crop.status == 'Growing' %}
+                                        <span class="badge bg-success">{{ crop.status }}</span>
+                                    {% elif crop.status == 'Harvested' %}
+                                        <span class="badge bg-primary">{{ crop.status }}</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">{{ crop.status }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">You haven't added any crops yet. <a href="{% url 'add_crop' %}">Add one now</a>.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="col-md-6 mb-4" data-aos="fade-left">
+        <div class="glass-card p-4 h-100">
+            <h4 class="mb-4">Market Trends (Simulated)</h4>
+            <canvas id="marketChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        const data = {{ chart_data|safe }};
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Market Demand Index',
+                    data: data.data,
+                    backgroundColor: 'rgba(67, 160, 71, 0.6)',
+                    borderColor: 'rgba(46, 125, 50, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

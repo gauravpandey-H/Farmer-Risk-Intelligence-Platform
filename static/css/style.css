@@ -1,0 +1,107 @@
+/* Color Palette
+ * #2E7D32 (Dark Green)
+ * #43A047 (Primary Green)
+ * #81C784 (Light Green)
+ * #F1F8E9 (Background Light Green)
+ * White
+ */
+
+ :root {
+    --primary-dark: #2E7D32;
+    --primary: #43A047;
+    --primary-light: #81C784;
+    --bg-light: #F1F8E9;
+    --white: #FFFFFF;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Green Gradient Hero / Backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    color: var(--white);
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: var(--white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.navbar-custom .navbar-brand {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+.navbar-custom .nav-link {
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.navbar-custom .nav-link:hover {
+    color: var(--primary);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(46, 125, 50, 0.15);
+}
+
+/* Buttons */
+.btn-primary-custom {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary-custom:hover {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+/* Dashboard Widgets */
+.widget-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.widget-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+main {
+    flex: 1;
+}
+
+/* Footer */
+.footer-custom {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+    margin-top: auto;
+}

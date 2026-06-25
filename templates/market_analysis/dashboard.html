@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Market Analysis - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="text-success"><i class="fa-solid fa-chart-line me-2"></i>Market Analysis</h2>
+            <p class="text-muted">AI-driven price predictions and historical trends for {{ selected_crop }}.</p>
+        </div>
+        <div>
+            <form method="get" class="d-flex">
+                <select name="crop" class="form-select me-2">
+                    <option value="Tomato" {% if selected_crop == 'Tomato' %}selected{% endif %}>Tomato</option>
+                    <option value="Potato" {% if selected_crop == 'Potato' %}selected{% endif %}>Potato</option>
+                    <option value="Rice" {% if selected_crop == 'Rice' %}selected{% endif %}>Rice</option>
+                </select>
+                <button type="submit" class="btn btn-primary-custom">Analyze</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6" data-aos="fade-up">
+        <div class="glass-card p-4 text-center border-start border-5 border-success">
+            <h5>Current Average Price</h5>
+            <div class="display-4 fw-bold text-success">₹{{ current_price }} / kg</div>
+        </div>
+    </div>
+    <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card p-4 text-center border-start border-5 {% if growth_pct > 0 %}border-primary{% else %}border-danger{% endif %}">
+            <h5>Projected 3-Month Growth</h5>
+            <div class="display-4 fw-bold {% if growth_pct > 0 %}text-primary{% else %}text-danger{% endif %}">
+                {% if growth_pct > 0 %}+{% endif %}{{ growth_pct }}%
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card p-4" data-aos="zoom-in">
+    <canvas id="marketChart" height="100"></canvas>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ historical_labels|safe }} .concat({{ future_labels|safe }}),
+                datasets: [{
+                    label: 'Historical Price (₹)',
+                    data: {{ historical_data|safe }} .concat([null, null, null]),
+                    borderColor: '#2E7D32',
+                    backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Predicted Price (₹)',
+                    data: Array({{ historical_data|length }}).fill(null).concat({{ future_data|safe }}),
+                    borderColor: '#1976D2',
+                    borderDash: [5, 5],
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: { responsive: true }
+        });
+    });
+</script>
+{% endblock %}

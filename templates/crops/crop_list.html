@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Crops - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4" data-aos="fade-down">
+    <h2 class="text-success"><i class="fa-solid fa-wheat-awn me-2"></i>My Crops</h2>
+    <a href="{% url 'crop_create' %}" class="btn btn-primary-custom"><i class="fa-solid fa-plus me-1"></i> Add Crop</a>
+</div>
+
+<div class="glass-card p-4" data-aos="fade-up">
+    {% if crops %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Crop Name</th>
+                    <th>Area (Acres)</th>
+                    <th>Sowing Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for crop in crops %}
+                <tr>
+                    <td>{{ crop.crop_name }}</td>
+                    <td>{{ crop.land_area }}</td>
+                    <td>{{ crop.sowing_date }}</td>
+                    <td>
+                        {% if crop.status == 'Growing' %}
+                            <span class="badge bg-success">{{ crop.status }}</span>
+                        {% elif crop.status == 'Harvested' %}
+                            <span class="badge bg-primary">{{ crop.status }}</span>
+                        {% else %}
+                            <span class="badge bg-danger">{{ crop.status }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-muted">No crops added yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

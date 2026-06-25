@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Crop - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center" data-aos="zoom-in">
+    <div class="col-md-6 mt-4">
+        <div class="glass-card p-4">
+            <h3 class="mb-4 text-success"><i class="fa-solid fa-leaf me-2"></i>Add New Crop</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary-custom">Save Crop</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

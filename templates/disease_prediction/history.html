@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Prediction History - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4" data-aos="fade-down">
+    <h2 class="text-success"><i class="fa-solid fa-clock-rotate-left me-2"></i>Prediction History</h2>
+    <a href="{% url 'predict_disease' %}" class="btn btn-primary-custom"><i class="fa-solid fa-microscope me-1"></i> New Analysis</a>
+</div>
+
+<div class="row">
+    {% for prediction in predictions %}
+    <div class="col-md-6 mb-4" data-aos="fade-up">
+        <div class="glass-card p-4 h-100 border-start border-5 {% if prediction.disease_name == 'Healthy' %}border-success{% else %}border-danger{% endif %}">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">{{ prediction.crop }}</h4>
+                <small class="text-muted">{{ prediction.prediction_date|date:"M d, Y" }}</small>
+            </div>
+            
+            <div class="row align-items-center mb-3">
+                <div class="col-4">
+                    {% if prediction.image %}
+                        <img src="{{ prediction.image.url }}" alt="Leaf Image" class="img-fluid rounded" style="max-height: 100px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-secondary text-white rounded d-flex align-items-center justify-content-center" style="height: 100px;">No Image</div>
+                    {% endif %}
+                </div>
+                <div class="col-8">
+                    <h5 class="{% if prediction.disease_name == 'Healthy' %}text-success{% else %}text-danger{% endif %}">{{ prediction.disease_name }}</h5>
+                    <p class="mb-0 text-muted">Confidence: {{ prediction.confidence }}%</p>
+                </div>
+            </div>
+            
+            <div class="bg-light bg-opacity-50 p-3 rounded mt-auto">
+                <h6 class="mb-2"><i class="fa-solid fa-lightbulb text-warning me-2"></i>Recommendation</h6>
+                <p class="mb-0 small">{{ prediction.recommended_solution }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center" data-aos="fade-in">
+        <div class="glass-card p-5">
+            <i class="fa-solid fa-microscope display-1 text-muted mb-3 opacity-25"></i>
+            <p class="text-muted mb-0">No predictions made yet.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

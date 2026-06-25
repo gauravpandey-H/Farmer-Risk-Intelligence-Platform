@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center" data-aos="zoom-in">
+    <div class="col-md-5 mt-5">
+        <div class="glass-card p-5 text-center">
+            <i class="fa-solid fa-wheat-awn text-success display-4 mb-3"></i>
+            <h3 class="mb-4 text-success">Welcome Back</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-start">
+                    {{ form|crispy }}
+                </div>
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary-custom btn-lg">Login</button>
+                </div>
+                <div class="mt-3">
+                    <small class="text-muted">New farmer? <a href="{% url 'register' %}">Create an account</a></small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

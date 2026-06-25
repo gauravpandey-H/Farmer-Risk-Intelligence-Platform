@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Reports - Farmer Risk Intelligence{% endblock %}
+
+{% block content %}
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-md-12">
+        <h2 class="text-success"><i class="fa-solid fa-file-pdf me-2"></i>Report Generation</h2>
+        <p class="text-muted">Export your farm data in PDF and CSV formats.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4" data-aos="fade-up">
+        <div class="glass-card p-4 text-center h-100">
+            <i class="fa-solid fa-file-pdf display-1 text-danger mb-3"></i>
+            <h4>Farmer Profile & Crops</h4>
+            <p class="text-muted">Download a complete PDF report of your profile, location, and crop statuses.</p>
+            <a href="{% url 'export_farmer_pdf' %}" class="btn btn-outline-danger mt-3">Download PDF Report</a>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card p-4 text-center h-100">
+            <i class="fa-solid fa-file-csv display-1 text-success mb-3"></i>
+            <h4>Crop Data Export</h4>
+            <p class="text-muted">Download a structured CSV file of your crops for use in Excel or other software.</p>
+            <a href="{% url 'export_crops_csv' %}" class="btn btn-outline-success mt-3">Download CSV Export</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
